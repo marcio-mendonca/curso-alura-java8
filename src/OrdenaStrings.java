@@ -14,31 +14,46 @@ public class OrdenaStrings {
 		palavras.add("editora casa do codigo");
 		palavras.add("caelum");
 
-		
 		Comparator<String> comparador = new ComparadorPorTamanho();
 //		Collections.sort(palavras, comparador);
 		palavras.sort(comparador);
-		
+
 		System.out.println(palavras);
-		
+
 //		for (String p : palavras) {
 //			System.out.println(p);
 //		}
-		
+
 		Consumer<String> consumidor = new ImprimeNaLinha();
 		palavras.forEach(consumidor);
+
+		// Lambda
+		System.out.println("#### Imprimindo lambda");
+		palavras.forEach(s -> System.out.println(s));
+
+		palavras.sort((s1, s2) -> {
+			if (s1.length() < s2.length()) {
+				return -1;
+			}
+			if (s1.length() > s2.length()) {
+				return 1;
+			}
+			return 0;
+		});
+		
+		palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+		palavras.sort((s1, s2) -> (s1.length() - s2.length()));
 	}
 }
 
-class ImprimeNaLinha implements Consumer<String>{
+class ImprimeNaLinha implements Consumer<String> {
 
 	@Override
 	public void accept(String s) {
 		System.out.println(s);
 	}
-	
-}
 
+}
 
 class ComparadorPorTamanho implements Comparator<String> {
 
@@ -50,7 +65,6 @@ class ComparadorPorTamanho implements Comparator<String> {
 		if (s1.length() > s2.length()) {
 			return 1;
 		}
-
 		return 0;
 	}
 }
